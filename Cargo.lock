@@ -176,23 +176,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "embassy-audio"
-version = "0.1.0"
-dependencies = [
- "embassy-executor",
- "embassy-time",
- "embedded-io",
- "embedded-svc",
- "esp-backtrace",
- "esp-hal",
- "esp-println",
- "esp-wifi",
- "heapless 0.8.0",
- "log",
- "smoltcp",
-]
-
-[[package]]
 name = "embassy-executor"
 version = "0.5.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -220,6 +203,23 @@ name = "embassy-futures"
 version = "0.1.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "1f878075b9794c1e4ac788c95b728f26aa6366d32eeb10c7051389f898f7d067"
+
+[[package]]
+name = "embassy-mic"
+version = "0.1.0"
+dependencies = [
+ "embassy-executor",
+ "embassy-time",
+ "embedded-io",
+ "embedded-svc",
+ "esp-backtrace",
+ "esp-hal",
+ "esp-println",
+ "esp-wifi",
+ "heapless 0.8.0",
+ "log",
+ "smoltcp",
+]
 
 [[package]]
 name = "embassy-sync"
