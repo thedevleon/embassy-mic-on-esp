@@ -16,6 +16,7 @@ use esp_hal::{
     IO,
 };
 use esp_println::println;
+// use embassy_time::Instant;
 
 #[main]
 async fn main(_spawner: Spawner) {
@@ -38,7 +39,7 @@ async fn main(_spawner: Spawner) {
         peripherals.I2S0,
         Standard::Philips,
         DataFormat::Data32Channel24,
-        44100u32.Hz(),
+        22050u32.Hz(),
         dma_channel.configure(
             false,
             &mut tx_descriptors,
@@ -63,6 +64,9 @@ async fn main(_spawner: Spawner) {
     loop {
         let _avail = transaction.available().await;
         //println!("available {}", avail);
+
+        //let start = Instant::now();
+
         let count = transaction.pop(&mut data).await.unwrap();
         //println!("got {} bytes}", count);
 
@@ -79,10 +83,17 @@ async fn main(_spawner: Spawner) {
                 if sample_i32 & (1 << 23) != 0 {
                     sample_i32 -= 2 * (1 << 23);
                 }
+                // let sample: f32 = sample_i32 as f32 / (1 << 24) as f32; // divide by 2^24 to get a value between -1 and 1
 
                 println!("{}", sample_i32);
                 // println!("{:02X} {:02X} {:02X} {:02X}", &data[i*4], &data[i*4+1], &data[i*4+2], &data[i*4+3]);
             }
         }
+
+        //let elapsed = Instant::now() - start;
+
+        // estimate the sample rate
+        //let sample_rate = count as f32 / elapsed.as_micros() as f32 * 1_000_000.0;
+        //println!("Sample rate: {:.2} kHz", sample_rate / 1_000.0);
     }
 }
